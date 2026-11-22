@@ -1,121 +1,122 @@
-# Employee Attrition Predictive Modeling
+# Employee Attrition & Human Capital Predictive Analytics
 
-> Predictive analytics workflow examining workplace satisfaction, compensation, and retention probability.
-
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=flat-square&logo=github)](https://github.com/sohailahmed-bsrh/employee-attrition-analysis)
-[![Live Showcase](https://img.shields.io/badge/Live-Showcase-0A66C2?style=flat-square&logo=googlechrome)](https://sohail.devsil.com/projects.html)
-[![Author](https://img.shields.io/badge/Author-Sohail%20Ahmed-20BEFF?style=flat-square)](https://sohail.devsil.com)
-
----
-
-## Overview
-
-Unplanned employee attrition costs enterprises thousands per vacancy and disrupts organizational continuity.
-
-This project provides an end-to-end, reproducible implementation engineered to solve this challenge through verified data transformations, reliable algorithms, and production-ready architecture.
+<p align="center">
+  <a href="https://sohail.devsil.com"><strong>Portfolio</strong></a> | 
+  <a href="https://github.com/sohailahmed-bsrh"><strong>GitHub Profile</strong></a> | 
+  <a href="https://github.com/sohailahmed-bsrh/employee-attrition-analysis"><strong>Source Repository</strong></a>
+</p>
 
 ---
 
-## Key Features
+## Executive Summary & Problem Statement
 
-- Exploratory analysis of HR metrics including overtime hours, salary bands, and performance ratings
-- Correlation analysis identifying key departure signals
-- Binary classification modeling predicting likelihood of employee resignation
-- Feature importance analysis detailing actionable workforce retention recommendations
+Employee turnover imposes massive costs on enterprise organizations: recruiting replacements, onboarding overhead, and lost institutional knowledge cost between 50% to 200% of an employee's annual salary. Human Resources departments often lack data-driven methods to identify flight-risk employees before notice is submitted.
+
+This project implements an enterprise **Employee Attrition Predictive Pipeline**. By evaluating workplace factors (overtime hours, compensation ratios, promotion velocity, managerial relationship tenure), the engine identifies high-risk retention cohorts and quantifies the primary root causes of turnover.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/sohailahmed-bsrh/myportfolio/main/assets/images/thumbnail/employee-attrition.jpeg" width="650" alt="Employee Attrition Analysis"/>
+  <p><em>Human capital retention analytics, class balancing, and attrition driver attribution.</em></p>
+</div>
 
 ---
 
-## System Architecture
+## Real-World Industry Applications
 
-```mermaid
-flowchart TD
-    HRData[HR Workforce Records] --> Preprocess[Categorical Encoding & Normalization]
-    Preprocess --> FeatureSelect[Correlation & Variance Thresholding]
-    FeatureSelect --> Classifier[Predictive Classification Modeling]
-    Classifier --> RiskScores[Individual Attrition Probability Scores]
-    RiskScores --> RetentionPlan[Human Resources Action Matrix]
+- **Proactive Talent Retention**: Flags top-performing talent with elevated turnover risk to HR business partners for retention conversations.
+- **Compensation & Overtime Balancing**: Analyzes the exact correlation between mandatory overtime hours and attrition rates across departments.
+- **Managerial Effectiveness Tracking**: Identifies departments exhibiting abnormally high turnover rates to improve leadership training.
+- **Career Path Planning**: Models the impact of promotion timelines on employee retention across engineering, sales, and operations.
+
+---
+
+## Technical Architecture & Engineering Walkthrough
+
+```
+                      [Enterprise Human Resources Dataset]
+                                        │
+                                        ▼
+                      [Feature Engineering & Ratios]
+              (Years In Role / Years at Company, Overtime Binary)
+                                        │
+                                        ▼
+                   [Class Imbalance Mitigation (SMOTE / Weights)]
+                                        │
+         ┌──────────────────────────────┼──────────────────────────────┐
+         ▼                              ▼                              ▼
+[Logistic Regression]           [Random Forest]                [XGBoost Classifier]
+(Interpretable Odds Ratios)   (Non-Linear Tree Splitting)     (Gradient Boosted Ensemble)
+         │                              │                              │
+         └──────────────────────────────┼──────────────────────────────┘
+                                        │
+                                        ▼
+                    [Feature Attribution & SHAP Global Analysis]
+                                        │
+                                        ▼
+                   [Executive HR Actionable Recommendations]
 ```
 
----
+### Step 1: HR Dataset Cleaning & Factor Encoding
+Ingests workplace metrics (`notebooks/Employee Attrition Analysis.ipynb`), encoding categorical variables (Department, Job Role, Education Field, OverTime) and normalizing continuous compensation variables.
 
-## Technology Stack
+### Step 2: Advanced Feature Engineering
+Constructs critical career trajectory ratios:
+- `Tenure_to_Age_Ratio`: Stability indicator.
+- `Years_Since_Last_Promotion_Ratio`: Stagnation risk score.
+- `Years_With_Current_Manager_Ratio`: Managerial stability.
 
-| Technology | Version / Spec | Role in Architecture |
-| :--- | :--- | :--- |
-| **Python** | `3.10+` | Data manipulation and scientific computing |
-| **Scikit-learn** | `1.3+` | Predictive estimators and model cross-validation |
-| **Pandas & NumPy** | `2.0+` | Dataframe aggregation and transformations |
-| **Seaborn** | `0.12+` | Correlation heatmaps and demographic bar charts |
+### Step 3: Addressing Class Imbalance via SMOTE
+Employee turnover is inherently unbalanced (e.g., 16% attrition vs 84% retention). Applies Synthetic Minority Over-sampling Technique (SMOTE) to the training split, ensuring the classifier achieves high sensitivity on positive attrition cases.
 
----
+### Step 4: Machine Learning Model Benchmarking
+Evaluates multiple classification estimators (Logistic Regression, Random Forest, XGBoost), optimizing for Recall and F1-Score to catch flight risks before departure.
 
-## Repository Structure
-
-```text
-employee-attrition-analysis/
-|-- notebooks/
-|   `-- Employee Attrition Analysis.ipynb
-|-- data/
-|-- .gitignore
-|-- requirements.txt
-`-- README.md
-```
+### Step 5: Root-Cause Attribution via SHAP
+Applies SHAP interpretability to rank top turnover drivers across departments, demonstrating that mandatory overtime, low job involvement, and infrequent promotion cycles dominate compensation alone.
 
 ---
 
-## Installation and Execution
+## Technology Stack & Implementation Specifications
 
-### Prerequisites
-- Python 3.10 or higher
-- Git version control
-- Virtual environment manager (`venv`)
+| Component | Technology | Version | Architectural Function |
+| :--- | :--- | :--- | :--- |
+| **Machine Learning** | Scikit-Learn | 1.3+ | Classifiers, SMOTE integration, ROC-AUC validation |
+| **Gradient Boosting** | XGBoost | 2.0+ | Regularized gradient boosted decision trees |
+| **Data Engine** | Pandas / NumPy | 2.x | Tabular parsing, dummy encoding, ratio computation |
+| **Visualization** | Seaborn / Matplotlib | 3.8+ | Attrition correlation matrices, feature importance plots |
 
-### Setup Instructions
-1. Clone the repository:
+---
+
+## Installation & Execution Guide
+
 ```bash
 git clone https://github.com/sohailahmed-bsrh/employee-attrition-analysis.git
 cd employee-attrition-analysis
-```
-
-2. Configure environment and dependencies:
-```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Windows: venv\Scriptsctivate | Unix: source venv/bin/activate
 pip install -r requirements.txt
-jupyter notebook notebooks/
+jupyter notebook "notebooks/Employee Attrition Analysis.ipynb"
 ```
-
----
-
-## Interface and Verification
-The system produces verifiable execution logs, prediction matrices, or interactive browser interfaces depending on the target mode. Verify operation by executing the commands specified above or inspecting the demonstration notebooks.
-
----
-
-## Author and Contact
-Developed by **Sohail Ahmed** — Full Stack AI Engineer & Machine Learning Specialist.
-- **Portfolio:** [sohail.devsil.com](https://sohail.devsil.com)
-- **GitHub:** [@sohailahmed-bsrh](https://github.com/sohailahmed-bsrh)
-- **Email:** [sohail.bsrh@gmail.com](mailto:sohail.bsrh@gmail.com)
 
 ---
 
 ## Author & Contact Information
 
-<table width="100%" align="center">
+<table width="100%">
   <tr>
-    <td align="center" style="padding: 20px;">
+    <td width="150" align="center" valign="middle">
+      <img src="https://avatars.githubusercontent.com/u/231165170?v=4" width="120" style="border-radius: 50%;" alt="Sohail Ahmed"/>
+    </td>
+    <td>
       <h3>Sohail Ahmed</h3>
-      <p><strong>Full-Stack Artificial Intelligence & Computer Vision Engineer</strong></p>
+      <p><strong>Senior Software Engineer & AI Systems Architect</strong></p>
+      <p>Specializing in Full-Stack AI Application Development, Computer Vision, Deep Learning Pipelines, and Scalable Automation Architectures.</p>
       <p>
-        <a href="https://sohail.devsil.com"><img src="https://img.shields.io/badge/Live_Portfolio-sohail.devsil.com-0052FF?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Portfolio"/></a>
-        <a href="https://github.com/sohailahmed-bsrh"><img src="https://img.shields.io/badge/GitHub-Profile-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
-        <a href="https://linkedin.com/in/sohail-ahmed-dev"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-        <a href="mailto:sohail.bsrh@gmail.com"><img src="https://img.shields.io/badge/Email-Contact_Me-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
+        <a href="https://sohail.devsil.com"><strong>Portfolio Website</strong></a> | 
+        <a href="https://github.com/sohailahmed-bsrh"><strong>GitHub Profile</strong></a> | 
+        <a href="https://www.linkedin.com/in/sohail-ahmed-546314316/"><strong>LinkedIn</strong></a> | 
+        <a href="mailto:se906403@gmail.com"><strong>Email Contact</strong></a>
       </p>
-      <p><em>Available for technical roles in Artificial Intelligence, Computer Vision, and Full-Stack Engineering.</em></p>
-      <hr style="border: 0; height: 1px; background: #30363d; margin: 15px 0;">
-      <small>Distributed under the MIT License.</small>
     </td>
   </tr>
 </table>
